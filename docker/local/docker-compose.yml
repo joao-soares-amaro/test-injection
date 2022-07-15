@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  test-injection:
+    container_name: test-injection
+    build:
+      context: .
+      dockerfile: ../../Dockerfile
+    image: test-injection
+    environment:
+      - DD_AGENT_HOST
+      - DD_TRACE_AGENT_PORT
+      - AWS_FIREHOSE_CLIENT_ID
+      - AWS_FIREHOSE_CLIENT_SECRET
+    ports:
+      - "8080:8080"
+      - "443:443"
+    networks:
+      - test-injection-network
+
+networks:
+  test-injection-network:
+    driver: bridge
+    ipam:
+      driver: default
